@@ -23,7 +23,9 @@
             @can('edit project')
                 <th>Edit</th>
             @endcan
-            <th>Delete</th>
+            @can('delete project')
+                <th>Delete</th>
+            @endcan
             <th>Show</th>
         </tr>
         </thead>
@@ -40,11 +42,11 @@
                     </td>
                 @endcan
 
-                <td>
-                    @can('delete project')
+                @can('delete project')
+                    <td>
                         <a href="{{ route('projects.delete', $project->id) }}">Delete</a>
-                    @endcan
-                </td>
+                    </td>
+                @endcan
 
                 <td>
                     <a href="{{ route('projects.show', $project->id) }}">
