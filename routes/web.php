@@ -22,6 +22,8 @@ Route::prefix('admin')
     ->group(function () {
         Route::resource('projects', AdminProjectController::class)
             ->names('projects');
+        Route::get('projects/{project}/delete', [AdminProjectController::class, 'delete'])
+            ->name('projects.delete');
     });
 
 
@@ -42,6 +44,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/projects/{project}/edit', function ($project) {
         return redirect()->route('admin.projects.edit', $project);
     })->name('projects.edit');
+
+    Route::get('/projects/{project}/delete', function ($project) {
+        return redirect()->route('admin.projects.delete', $project);
+    })->name('projects.delete');
 
     Route::delete('/projects/{project}', function ($project) {
         return redirect()->route('admin.projects.destroy', $project);

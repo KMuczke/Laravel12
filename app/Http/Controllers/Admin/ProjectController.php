@@ -9,8 +9,19 @@ use App\Http\Requests\ProjectUpdateRequest;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class ProjectController extends Controller
+class ProjectController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            Middleware::make('permission:index project')->only(['index']),
+            Middleware::make('permission:create project')->only(['create', 'store']),
+            Middleware::make('permission:show project')->only(['show']),
+            Middleware::make('permission:edit project')->only(['edit', 'update']),
+            Middleware::make('permission:delete project')->only(['delete', 'destroy']),
+        ];
+    }
+
     public function index()
     {
         $projects = Project::all();
@@ -42,6 +53,11 @@ class ProjectController extends Controller
     {
         $project->update($request->validated());
         return to_route('projects.index');
+    }
+
+    public function delete(Project $project)
+    {
+        return view('admin.projects.delete', compact('project'));
     }
 
     public function destroy(Project $project)

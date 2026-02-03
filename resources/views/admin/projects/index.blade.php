@@ -10,13 +10,19 @@
         </div>
     @endif
 
+    @can('create project')
+        <a href="{{ route('projects.create') }}">Create New Project</a>
+    @endcan
+
     <table>
         <thead>
         <tr>
             <th>ID</th>
             <th>Naam</th>
             <th>Beschrijving</th>
-            <th>Edit</th>
+            @can('edit project')
+                <th>Edit</th>
+            @endcan
             <th>Delete</th>
             <th>Show</th>
         </tr>
@@ -28,17 +34,15 @@
                 <td>{{ $project->name }}</td>
                 <td>{{ \Illuminate\Support\Str::limit($project->description, 50) }}</td>
 
-                <td>
-                    <a href="{{ route('projects.edit', $project->id) }}">Edit</a>
-                </td>
+                @can('edit project')
+                    <td>
+                        <a href="{{ route('projects.edit', $project->id) }}">Edit</a>
+                    </td>
+                @endcan
 
                 <td>
                     @can('delete project')
-                        <form action="{{ route('projects.destroy', $project) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit">Delete</button>
-                        </form>
+                        <a href="{{ route('projects.delete', $project->id) }}">Delete</a>
                     @endcan
                 </td>
 
