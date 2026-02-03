@@ -282,6 +282,8 @@
                     </a>
                     <hr>
                     <!-- end item -->
+                    <h1 style="display:none;">Laravel Opdrachten</h1>
+
 
                     <!-- item -->
                     <a class="flex flex-row items-center justify-start px-4 py-4 block capitalize font-medium text-sm tracking-wide bg-white hover:bg-gray-200 transition-all duration-300 ease-in-out" href="#">
