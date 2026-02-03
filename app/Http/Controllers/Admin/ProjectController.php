@@ -14,11 +14,11 @@ class ProjectController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            Middleware::make('permission:index project')->only(['index']),
-            Middleware::make('permission:create project')->only(['create', 'store']),
-            Middleware::make('permission:show project')->only(['show']),
-            Middleware::make('permission:edit project')->only(['edit', 'update']),
-            Middleware::make('permission:delete project')->only(['delete', 'destroy']),
+            new Middleware('permission:index project', only: ['index']),
+            new Middleware('permission:create project', only: ['create', 'store']),
+            new Middleware('permission:show project', only: ['show']),
+            new Middleware('permission:edit project', only: ['edit', 'update']),
+            new Middleware('permission:delete project', only: ['delete', 'destroy']),
         ];
     }
 
