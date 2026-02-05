@@ -11,16 +11,17 @@ class Task extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'deadline',
+        'task',        // Changed from 'name'
+        'begindate',   // Changed from 'deadline'
+        'enddate',     // Added
         'user_id',
         'project_id',
         'activity_id',
     ];
 
     protected $casts = [
-        'deadline' => 'date',
+        'begindate' => 'date',
+        'enddate' => 'date',
     ];
 
     /**

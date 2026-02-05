@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->text('description');
-            $table->date('deadline');
+            $table->string('task', 100);  // Changed from 'name' to 'task'
+            $table->date('begindate');     // Changed from 'deadline' to 'begindate'
+            $table->date('enddate');       // Added 'enddate'
 
             // Foreign keys met de juiste constraints
             $table->foreignId('user_id')
