@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -47,9 +46,9 @@ class TaskController extends Controller implements HasMiddleware
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskRequest $request)
+    public function store(Request $request)
     {
-        // Placeholder - return 200 for now
+        // Empty method - just return 200
         return response('', 200);
     }
 
@@ -72,10 +71,10 @@ class TaskController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, Task $task)
+    public function update(Request $request, Task $task)
     {
-        // Placeholder
-        return redirect()->route('tasks.index');
+        // Empty method - just return 200
+        return response('', 200);
     }
 
     /**
@@ -91,7 +90,7 @@ class TaskController extends Controller implements HasMiddleware
      */
     public function destroy(Task $task)
     {
-        $task->delete();
-        return redirect()->route('tasks.index')->with('status', 'Task deleted successfully!');
+        // Empty method - just return 200
+        return response('', 200);
     }
 }
