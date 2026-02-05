@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
+use App\Http\Controllers\Admin\TaskController;
 
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
 use App\Http\Controllers\Open\ProjectController as OpenProjectController;
@@ -31,7 +32,10 @@ Route::view('/dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-
+Route::middleware(['check.task'])->group(function () {
+    Route::resource('tasks', TaskController::class);
+    Route::get('tasks/{task}/delete', [TaskController::class, 'delete'])->name('tasks.delete');
+});
 
 Route::middleware(['auth'])->group(function () {
 

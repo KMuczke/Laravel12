@@ -3,50 +3,50 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\PermissionRegistrar;
+use Spatie\Permission\Models\Role;
 
 class RoleAndPermissionSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $permissions = [
-            'index project',
-            'create project',
-            'show project',
-            'edit project',
-            'delete project',
-        ];
+        $admin = Role::create(['name' => 'admin']);
+        $teacher = Role::create(['name' => 'teacher']);
+        $student = Role::create(['name' => 'student']);
 
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-        }
-
-
-        $student = Role::firstOrCreate(['name' => 'student']);
-        $teacher = Role::firstOrCreate(['name' => 'teacher']);
-        $admin   = Role::firstOrCreate(['name' => 'admin']);
-
-
+        Permission::create(['name' => 'index task']);
+        Permission::create(['name' => 'create task']);
+        Permission::create(['name' => 'show task']);
+        Permission::create(['name' => 'edit task']);
+        Permission::create(['name' => 'delete task']);
 
         $student->givePermissionTo([
-            'index project',
-            'create project',
-            'show project',
-            'edit project',
+            'index task',
+            'create task',
+            'show task',
+            'edit task',
+            'delete task',
         ]);
 
         $teacher->givePermissionTo([
-            'index project',
-            'create project',
-            'show project',
-            'edit project',
-            'delete project',
+            'index task',
+            'create task',
+            'show task',
+            'edit task',
+            'delete task',
         ]);
 
-        $admin->givePermissionTo(Permission::all());
+        $admin->givePermissionTo([
+            'index task',
+            'create task',
+            'show task',
+            'edit task',
+            'delete task',
+        ]);
     }
 }

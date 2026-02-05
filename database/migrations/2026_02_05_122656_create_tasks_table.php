@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('task', 100);  // Changed from 'name' to 'task'
-            $table->date('begindate');     // Changed from 'deadline' to 'begindate'
-            $table->date('enddate');       // Added 'enddate'
+            $table->string('task', 100);
+            $table->date('begindate');
+            $table->date('enddate')->nullable();  // NULLABLE toevoegen!
 
             // Foreign keys met de juiste constraints
             $table->foreignId('user_id')
@@ -38,9 +38,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('tasks');

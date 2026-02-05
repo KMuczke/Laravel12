@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Activity;
 use Illuminate\Database\Seeder;
 
 class ActivitySeeder extends Seeder
@@ -12,6 +12,17 @@ class ActivitySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // Maak specifieke activities aan (niet via factory!)
+        $activities = [
+            ['id' => 1, 'name' => 'Todo'],
+            ['id' => 2, 'name' => 'Doing'],
+            ['id' => 3, 'name' => 'Testing'],
+            ['id' => 4, 'name' => 'Verify'],
+            ['id' => 5, 'name' => 'Done'],
+        ];
+
+        foreach ($activities as $activity) {
+            Activity::create($activity);
+        }
     }
 }
