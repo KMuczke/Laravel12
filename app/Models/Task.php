@@ -10,7 +10,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $guarded = [
         'task',
         'begindate',
         'enddate',
@@ -19,10 +19,11 @@ class Task extends Model
         'activity_id',
     ];
 
-    protected $casts = [
-        'begindate' => 'date',
-        'enddate' => 'date',
-    ];
+    // Remove or comment out the $casts to store dates as strings
+    // protected $casts = [
+    //     'begindate' => 'date',
+    //     'enddate' => 'date',
+    // ];
 
     public function user(): BelongsTo
     {

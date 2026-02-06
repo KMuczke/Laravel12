@@ -4,12 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use App\Models\User;
+use App\Models\Project;
+use App\Models\Activity;
+use App\Http\Requests\TaskStoreRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
 class TaskController extends Controller implements HasMiddleware
 {
+    // ... rest of the code stays the same
     /**
      * Get the middleware that should be assigned to the controller.
      */
@@ -40,16 +45,27 @@ class TaskController extends Controller implements HasMiddleware
      */
     public function create()
     {
-        return view('admin.tasks.create');
+        $users = User::all();
+        $projects = Project::all();
+        $activities = Activity::all();
+
+        return view('admin.tasks.create', compact('users', 'projects', 'activities'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(TaskStoreRequest $request)
     {
-        // Empty method - just return 200
-        return response('', 200);
+        $task = new Task();
+        $task->forceFill($request->validated());
+        $task->save();
+
+        return redirect()->route('tasks.index')
+            ->with('status', "Taak: {$task->task} is aangemaakt");
     }
 
     /**
@@ -63,23 +79,33 @@ class TaskController extends Controller implements HasMiddleware
     /**
      * Show the form for editing the specified resource.
      */
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(Task $task)
     {
-        return view('admin.tasks.edit', compact('task'));
+        $users = User::all();
+        $projects = Project::all();
+        $activities = Activity::all();
+
+        return view('admin.tasks.edit', compact('task', 'users', 'projects', 'activities'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(TaskStoreRequest $request, Task $task)
     {
-        // Empty method - just return 200
-        return response('', 200);
+        $task->forceFill($request->validated());
+        $task->save();
+
+        return redirect()->route('tasks.index')
+            ->with('status', "Taak: {$task->task} is gewijzigd");
     }
 
-    /**
-     * Show the delete confirmation page.
-     */
     public function delete(Task $task)
     {
         return view('admin.tasks.delete', compact('task'));
@@ -88,9 +114,15 @@ class TaskController extends Controller implements HasMiddleware
     /**
      * Remove the specified resource from storage.
      */
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(Task $task)
     {
-        // Empty method - just return 200
-        return response('', 200);
+        $taskName = $task->task;
+        $task->delete();
+
+        return redirect()->route('tasks.index')
+            ->with('status', "Taak: {$taskName} is verwijderd");
     }
 }
